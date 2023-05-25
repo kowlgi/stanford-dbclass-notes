@@ -1,40 +1,35 @@
-LECTURE 1: Intro to the course
-==============================
+## LECTURE 1: Intro to the course
 
-Aspects of a database system -
-+ Massive - handle huge amounts of data
-+ Persistent - data outlives programs that execute on data
-+ Safe - data will always be in a consistent state inspite of power, network utages, etc.
-+ Multiuser - data can be accessed concurrently by different programs
-+ Convenient - makes it easy to work with large amounts of data. There's a notion in databases called 'physical data independence,' where programs are completely agnostic to how data is actually stored. E.g. Query languages are declarative, as they allow you to access data without specifying algorithm.
-+ Efficient - three most important features of databases 1. perf 2. perf 3. perf
-+ Reliable - Critically important that 99.999% of the time database should  be available
+Attributes of a database system:
+* Massive - handle huge amounts of data
+* Persistent - data outlives programs that execute on data
+* Safe - data will always be in a consistent state inspite of power, network utages, etc.
+* Multiuser - data can be accessed concurrently by different programs
+* Convenient - makes it easy to work with large amounts of data. There's a notion in databases called 'physical data independence,' where programs are completely agnostic to how data is actually stored. E.g. Query languages are declarative, as they allow you to access data without specifying algorithm.
+* Efficient - three most important features of databases 1. perf 2. perf 3. perf
+* Reliable - Critically important that 99.999% of the time database should  be available
 
+Aspects of a database system:
 * Database applications may be programmed via frameworks, e.g. django, ruby on rails, etc.
 * Database applications may not necessaril use DBMS e.g. excel spreadsheets. Hadoop is a data processing system that works on files.
 * Applications servers, web servers are middleware that allow apps to access data.
 
-Key concepts
-```````````
+### Key concepts
 * Data model
-+ set of records
-+ XML
-- graph
-
+** set of records
+** XML
+** graph
 * Schema - structure of a database is defined using a data definition language)
 Schema is set at the beginning and does not change.
-
 * Data manipulation language (DML) - for querying a language
 
-People involved with databases
-``````````````````````````````
+### People involved with databases
 * DBMS implementer - builds system
 * Database designer - establishes schema
 * Database application developer - writes programs that uses database
 * Database administrator - loads data, keeps it running smoothly. Databases have tuning parameters that need to be set properly for efficient operations.
 
-LECTURE 2 - The Relational Model
-================================
+## LECTURE 2 - The Relational Model
 
 * Used by all major commercial database systems - spawned a billion $ implementation
 * simple model that can be implemented efficiently
@@ -146,7 +141,7 @@ Edition may not be present
 
    <!ELEMENT Authors (Author+)>
 means Authors can have one or more Author elements
-  
+
    <!ELEMENT Author(First_Name, Last_Name)>
 -- Author element consists of First_Name and Last_Name elements in that order.
    <!ELEMENT First_Name (#PCDATA)>
