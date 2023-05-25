@@ -41,14 +41,15 @@ Schema is set at the beginning and does not change.
 + NULL  - special value for "unknown" or "undefined". We have to be careful about using NULL values in databases. For e.g. gpa > 3.5 OR gpa <= 3.5 will return all records except the one with gpa = NULL.
 + Key - attribute whose value is unique in each tuple. Or set of attributes whose combined values are unique.
 
+```
 create Table Student(ID, name, GPA, photo) - to create a table in SQL
 create Table College
    (name string, state char(2), enrollment integer) - to specify types for attributes
+```
 
-LECTURE 3 - Querying Relational Databases
-=========================================
+## LECTURE 3 - Querying Relational Databases
 
-+ Database people have the habit of representing databases as gigantic disks
+Database people have the habit of representing databases as gigantic disks
 
 Steps in using a database:
 1. Design schema; create using DDL
@@ -62,15 +63,14 @@ A relational database allows "ad-hoc queries in high-level language"
 Compositionality - ability to run a query on the result of another query.
 Closed language - when the result of a query is the same type of object as a query
 
-Query languages
-```````````````
-* Relation algebra - formal
-   + pi (result of query) sigma (predicate) infinity symbol (joins tables)
-* SQL - actual/implemented
-   + select (result of query) from (what tables to run query on) where (predicate)
+### Query languages
 
-LECTURE 4: XML Data - Introduction, Well-formed XML
-===================================================
+* Relation algebra - formal
+    * pi (result of query) sigma (predicate) infinity symbol (joins tables)
+* SQL - actual/implemented
+    * select (result of query) from (what tables to run query on) where (predicate)
+
+## LECTURE 4: XML Data - Introduction, Well-formed XML
 
 * XML (Extensible markup language) is an alternate model to relational model.
 * Standard for data representation and exchange. Designed for the web.
@@ -78,14 +78,14 @@ LECTURE 4: XML Data - Introduction, Well-formed XML
 
 * Element(open-close tags and data), attributes (element's properties)
 
-Difference between XML and database?
+### Difference between XML and database?
 + Structure - labels v. hierarchical (tree) or graph
 + Schema is fixed in advance for database, XML is self-describing and flexible.
 + Simple nice languages for querying databases, Less so for XML.
 + No ordering in database, ordering is implied in XML
 + Native implementation on many systems for DBs, XML is just an add on and may be based on a relational DB.
 
-Well-Formed XML: most flexible XML. If documents adhere to XML standard, it's well-formed
+### Well-Formed XML: most flexible XML. If documents adhere to XML standard, it's well-formed
 + single root element
 + matched tags with proper nesting
 + unique attributes within elements
@@ -94,8 +94,7 @@ XML document -> XML parser (tells you if XML is well formed) -> parsed XML
 Displaying XML: Use a rule-based language to translate to HTML e.g.CSS, XSL
 XML document -> CSS/XSL interpreter (rules are specified here) -> HTML document
 
-LECTURE 5: XML Data: DTDs ( Document Type Descriptors), IDs and IDREFs
-======================================================================
+## LECTURE 5: XML Data: DTDs ( Document Type Descriptors), IDs and IDREFs
 
 "Valid" XML : besides being well-formed, the document also adheres to basic structural requirements. Common ways of specifying XML structure are
 + Document Type Descriptor (DTD)
@@ -103,24 +102,24 @@ LECTURE 5: XML Data: DTDs ( Document Type Descriptors), IDs and IDREFs
 
 XML document -> Validating parser ( DTD or XSD input) -> Parsed XML
 
-DTD:
+### DTD:
 * Grammar-like language for specifying elements, nesting, attributes, ordering, #occurences
 * Also special attribute types ID and IDREFs which allow you to specify pointers within document, although these pointers are untyped.
 
-Benefits of DTD/XSD :
+### Benefits of DTD/XSD :
 1. Programs can be simpler as they can assume a structure
 2. CSS/XSL can assume a strcuture
 3. It's a specification for XML.
 4. Documentation on what data actually looks like. Offers the benefit of "typing."
 
-Disadvantages :
+### Disadvantages :
 1. Flexibility of XMLs is lost because of DTDs
 2. DTDs can be really messy for irregular documents
 
 DTD is specified before file in the same document. In a DTD, all attribute values are treated as strings.
 
 E.g. of DTD
-
+```
 <!DOCTYPE Bookstore [
    <!ELEMENT Bookstore (Book | Magazine)*>
 -- says the XML can contain a single Bookstore root element, which can contain any number of Book or Magazine elements.
@@ -131,11 +130,13 @@ E.g. of DTD
    <!ATTLIST Book ISBN CDATA #REQUIRED
                   Price CDATA #REQUIRED
                   Edition CDATA #IMPLIED>
+```
 
 CDATA -- just string
 ISBN and Price have to be present
 Edition may not be present
 
+```
    <!ELEMENT Title (#PCDATA)>
 #PCDATA means Title is a string. It can be an empty string.
 
@@ -147,9 +148,10 @@ means Authors can have one or more Author elements
    <!ELEMENT First_Name (#PCDATA)>
    <!ELEMENT Last_Name (#PCDATA)>
 ]>
+```
 
 xmllint can be used to check for XML validity.
-
+```
 <Bookstore>
    <Book ISBN="12321-1231" Price="100" Authors="JU SK">
       <Title>First course</Title>
@@ -164,6 +166,7 @@ xmllint can be used to check for XML validity.
    </Author>
 
 </Bookstore>
+```
 
 Ident is an ID attribute. It needs to have a unique value.
 Authors is an IDREFs attribute. It's value can point to one or more elements and is typeless.
@@ -173,8 +176,7 @@ IDREFS - one or more attribute values
 
 DTDs cannot have typed pointers, but XML schema can.
 
-LECTURE 6: XML DATA - XML SCHEMA
-================================
+## LECTURE 6: XML DATA - XML SCHEMA
 
 XSD (XML Schema)
 1.Similar to DTDs
@@ -183,8 +185,7 @@ XSD (XML Schema)
 XSD is usually in a separate file from the XML.
 XSD is written in XML, except it has special tags.
 
-LECTURE 7: RELATIONAL ALGEBRA (1)
-===================================================
+## LECTURE 7: RELATIONAL ALGEBRA (1)
 
 Relational algebra forms the underpinnings of an implemented language like SQL.
 
@@ -212,8 +213,7 @@ Written using a bowtie symbol. It is purely for expressing conveniently, and eve
 
 6. Theta Join - it's an abbreviation and does not add expressiveness to the language. It's a basic operation in DBMS languages. When people use the word join, they generally mean 'theta join.' It basically applies a condition to the cross product of two relations.
 
-LECTURE 8: RELATIONAL ALGEBRA (2) - SET OPERATORS, RENAMING, NOTATION
-===================================================================
+## LECTURE 8: RELATIONAL ALGEBRA (2) - SET OPERATORS, RENAMING, NOTATION
 
 1. Union operators
 natural join and cross product operations result in matching tuples from different relations with one another. The union operator vertically joins various tuples.
@@ -233,8 +233,7 @@ E.g. Find pairs of colleges in same state.
 Alternate notation
 Trees and linear representations.
 
-LECTURE 9: INTRODUCTION TO SQL
-=============================
+## LECTURE 9: INTRODUCTION TO SQL
 
 * Pronounced as  sequel.
 * Supported by all commercial database systems
@@ -262,8 +261,8 @@ equivalent relational algebra notation:
 project over A1, A2, A3 (select cond1, cond2 from R1xR2xR3)
 basically, project over these features, where the tuples from the cross product of R1, R2 and R3 satisfy cond1, cond2.
 
-LECTURE 10: SQL - basic Select statement
-========================================
+## LECTURE 10: SQL - basic Select statement
+
 SQL we have duplicates unlike relational algebra as it uses multiset as opposed to a set.
 
 Use the distinct keyword to eliminate duplicates.
@@ -273,8 +272,7 @@ SQL is an unordered model. If you want an ordered result, you have to specify th
 like - regular expression matching in SQL query conditions.
 You can also have arithmetic in arguments to select.
 
-LECTURE 11: Table Variables and Set operators
-=============================================
+## LECTURE 11: Table Variables and Set operators
 
 Table variables are the ones used in the 'from' clause.
 
@@ -287,45 +285,47 @@ Helpful to rename relation if you want to run cross product on same table.
 Union operator in SQL by default eliminates duplicates, so it has to internally sort results. Therefore the results always show up as sorted, unless you use the 'union all' clause.
 
 e.g.
-
 select cName as name from College
 union all   // does not elim. duplicates
 select sName as name from Student
 order by name // sort in ascending order by default
 
-Intersect operator
-------------------
+### Intersect operator
+```
 select sID from Apply where major = 'CS'
 intersect
 select sID from Apply where major = 'EE'
+```
 
 Some databases don't support intersect operator, but they don't lose any expressive power.
 
 Another way to find intersection :
+```
 select distinct A1.sID
 from Apply A1, Apply A2
 where A1.sID = A2.sID and A1.major = 'CS' and A2.major = 'EE'
-
+```
 'except' is the difference operator. There are some queries that cannot be written without this operator.
 
 E.g.
-
+```
 select sID from Apply where major  ='CS'
 except
 select sID from Apply where major = 'EE;
+```
 
 The above expression will return values of students who only applied to CS and not EE.
 
 The above expression cannot possibly be reproduced without the except operation. For instance
-
+```
 select sID
 from Apply A1, Apply A2
 where A1.sID = A2.sID and major = 'CS' and major <> 'EE';
+```
 
 This expression is not equivalent to the one using 'except' as it returns all students who major in CS and also have a non-EE major, which includes CS! Therefore any student that majors in CS will automatically appear in the result.
 
-LECTURE 12: Subqueries WHERE clause
-===================================
+### LECTURE 12: Subqueries WHERE clause
 
 To calculate GPA
 
@@ -333,63 +333,64 @@ Select GPA
 From  Student
 Where sID in (select sID from Apply where major = 'CS')
 - Here you get the exact list of unique CS student GPAs
-
+```
 select GPA
 from Student, Apply
 where Student.sID = Apply.sID and major = 'CS'
+```
 - Here you will get GPA duplicates because you're joining the Student and Apply relations. Also, you don't want to avoid duplicate GPAs cause two students may have the same GPA. Therefore using a subquery is the only correct way to write this query.
 
 With subqueries you can write expressions without the except operator. Taking the previous example,
-
+```
 select sID, sName
 from Student
 where sID in (select sID from Apply where major = 'CS')
 and sID not in (select sID from Apply where major = 'EE');
-
+```
 in or not in - to check membership
 exists - to check if a relation is empty or not
 
 Correlated reference - when a subsquery uses a relation that comes from the enclosing query.
-
+```
 select cName, state
 from College C1
 where exists (select * from College C2
               where C2.state = C1.state and
               C1.cName <> C2.cName)
-
+```
 C1 is a correlated reference in the above query.
 
 How to find a max/min value?
 E.g.
+```
 select sName, GPA
 from Student C1
 where not exists (select * from Student C2
                   where C2.GPA > C1.GPA);
-
+```
 Just by using joins it's not possible to find a max value. You have to use a subquery.
 
 'all' keyword - check if a value has a certain relationship with all elements of subquery.
 
 E.g.
+```
 select sName, GPA
 from Student S1
 where GPA > all (select GPA from Student S2);
-
+```
 The above query returns the sName of the highest GPA student.
 
 'any' keyword - check if a value is sataisfied with one or more elements of subquery.
 
 Any and all are very convenient, but they do not give expressive power. The same can be achieved using 'exists and not exists.
 
-LECTURE 13: Subqueries FROM and SELECT clauses
-==============================================
+## LECTURE 13: Subqueries FROM and SELECT clauses
 
 Subqueries can also be used in select and from clauses.    
 
 When you use a subquery in a select clause, that subquery should return exactly one result.
 
-LECTURE 14: Aggregation
-=======================
+## LECTURE 14: Aggregation
 
 Select A1, A2, A3 ( aggregation functions over values in multiple rows e.g. min, max, sum, avg)
 From
@@ -398,64 +399,80 @@ Group By columns ( allows us to partition results into groups)
 Having condition (applies to groups, allows us to have filters)
 
 Simplest aggregation query:
+```
 select avg(GPA)
 from Student;
+```
 
 There's a problem with this query:
+```
 select avg(GPA)
 from Student, Apply
 where Student.sID = Apply.sID and major = 'CS';
-
+```
 Some students would have applied to CS in many colleges so we may double-count certain students' GPA.
 
 To fix the problem, we do this --
+```
 select avg(GPA)
 from Student
 where sID in (select sID from Apply where major = 'CS');
-
+```
 count function - returns the number of tuples in the result.
 
 E.g.
 We'll attempt to count the number of applicants to Cornell
+```
 select count(*)
 from Apply
 where cName = "Cornell"
+```
 
 But, there's a problem with the above query. It will return the number of applications to Cornell, and there could be multiple applications per applicant.
 
 SQL provides a simple way of fixing the above query:
+```
 select count(distinct sID)
 from Apply
 where cName = "Cornell";
+```
 
 A slightly contrived example, to select the students such that number of other students with the same GPA is equal to the number of other students with the same sizeHS.
 
+```
 select *
 from Student S1
 where (select count(*) from Student S2
        where S2.sID <> S1.sID and S2.GPA = S1.GPA) =
       (select count(*) from Student S2
        where S2.sID <> S1.sID and S2.sizeHS = S1.sizeHS);
+```
 
 Group by is only used in conjunction with aggregation.
 E.g.
 To count the number of applicants to each college
+```
 select cName, count(*)
 from Apply
 group by cName;
+```
 
 Grouping takes a relation and partitions it by values of a certain attribute.
 
 Total enrollment of college students for each state:
+```
 select state, sum(enrollment)
 from College
 group by state;
+```
 
 A more complicated query:
+```
 select cName, major, min(GPA), max(GPA)
 from Student, Apply
 where Student.sID=Apply.sID
 group cName, major
+```
 
 The above query finds the min and max GPAs of applicants to each college and major.
 
@@ -464,22 +481,25 @@ The having clause applies a filter to the grouping clause.
 Every query that can be written by group by and having can be written in a more complicated way by simple select-from-where idiom.
 
 How to count number of applicants to a college?
+```
 select cName
 from Apply
 group by cName
 having count(distinct sID) < 5;
+```
 
 Using sub query within having clause:
+```
 select major
 from Student, Apply
 where Student.sID=Apply.sID
 group by major
 having max(GPA) < (select avg(GPA) from Student);
+```
 
 The above query returns majors whose applicant's max. GPA is below the average.
 
-LECTURE 15: NULL values
-=======================
+## LECTURE 15: NULL values
 
 Any value of an attribute can take on the value NULL ( unspecified/unknown).
 
@@ -487,13 +507,13 @@ Tautology is a logical expression that is always true.
 
 There are quite a few subtleties regarding null values and aggregation functions and null values and subqueries.
 E.g.
+```
 select distinct GPA
 from Student;
-
+```
 Returns GPAs that are null. However when you count the number of distinct GPAs, null values are not counted.
 
-LECTURE 16: Data Modification statements
-=======================================
+## LECTURE 16: Data Modification statements
 
 For inserting data there are two methods --
 1. Insert Into Table Values (A1, A2... An)
@@ -504,32 +524,39 @@ E.g. insert into College values('Carnegie Mellon', 'PA', 11500);
    select-statement
 The select-statement produces a set of tuples, and as long as the schema of these tuples is the same as the table, they'll be inserted into the table.
 E.g.
+```
 insert into Apply
 select sID, 'Carnegie Mellon', 'CS', null
 from Student
 where sID not in (select sID from Apply);
+```
 To have all students who didn't apply anywhere apply to CS at Carnegie Mellon.
 
 To delete existing data --
+```
 Delete From Table
 where Condition
+```
 
 e.g.
 Delete all students who applied to more than two different majors
+```
 delete from Student
 where sID in
    (select sID from Apply
     group by sID
     having count(distinct major) > 2);
-
+```
 Some db systems don't allow (Sqlite and MySQL) delete command if you include relation you're deleting from, so it's a bit more complicated -- you have to create a duplicate temporary table and delete from the original table while querying the duplicate temporary table. PostGreSQL allows deleting from the table you're querying from.
 
 You have to delete tuples from different relations one at a time.
 
 Updating existing data --
+```
 Update Table
 Set Attr=Expression (can involve queries etc)
 Where Condition  (can involve subqueries etc)
+```
 
 In the set clause, the attribute is set the result of
 the expression. Multiple attributes in a tuple can be
@@ -538,14 +565,14 @@ updated.
 E.g.
 Accept applicants to Carnegie Mellon with GPA < 3.6 but
 turn them into economic majors.
-
+```
 update Apply
 set decision = 'Y', major = 'economics'
 where cName = 'Carnegie Mellon'
 and sID in (select sID from Student where GPA < 3.6);
+```
 
-LECTURE 17: Relational Design Theory - Motivation and overview
-==============================================================
+## LECTURE 17: Relational Design Theory - Motivation and overview
 
 Designing a database schema
 - usually many designs possible
@@ -566,14 +593,13 @@ Instead of one big relation, divvy up the information among multiple relations. 
 
 The best design depends on constructing relations well but also what the data is representing in the real world.
 
-Basic idea - design by decomposition
-------------------------------------
+### Basic idea - design by decomposition
 
 * Start with megarelations containing everything
 * Decompose into smaller relations
 * Can do decomposition automatically.
 
-Automatic decomposition:
+### Automatic decomposition:
 * Mega relations + properties of the data
 * System decomposes based on properties
 * Final set of relations satisfies normal form.
@@ -581,8 +607,7 @@ Automatic decomposition:
 Functional dependencies -> BCNF ( strict)
 + Multivalued dependencies -> Fourth Normal Form
 
-General idea:
-````````````
+### General idea:
 Apply(ssn, sname, cname)
 * Redundancy; update and deletion anomalies
 * Store ssn-sname pair for each college
@@ -596,8 +621,7 @@ BCNF: If A->B then A is a key.
 How to decompose: Pull out key and value into a separate relation
 Student(ssn, sname) Apply(ssn, cname)
 
-Multivalued dependencies and 4NF
--------------------------------
+### Multivalued dependencies and 4NF
 
 Apply(ssn, cname, HS)
 * Still has redundancy; update and deletion anomalies
@@ -611,8 +635,7 @@ ssn ->> cname, ssn->> HS
 
 4NF: If A ->> B, then A is a key
 
-LECTURE 18: Functional dependencies
-===================================
+## LECTURE 18: Functional dependencies
 
 Normal forms are good relations.
 
@@ -630,8 +653,7 @@ Functional dependencies generalize the notion of keys. You cannot have multiple 
 2. Nontrivial FD: A -> is B is not a subset of A.
 3. Comletely nontrivial FD: A->B where A intersection B is NULL.
 
-Rules that apply to FD:
-``````````````````````
+### Rules that apply to FD:
 * Splitting Rule : A -> B1, B2, B3 means A->B1, A->B2, etc.
 But, you can only split the RHS.
 * Combining Rule : inverse of splitting rule
@@ -653,19 +675,17 @@ What do we want??
 Minimal set of completely nontrivial FDs such that all FDs that hold on the relation follow from the dependencies in this set.
 
 
-LECTURE 19: Boyce Codd Normal Form (BCNF)
-=========================================
+## LECTURE 19: Boyce Codd Normal Form (BCNF)
 
 Relational design by decomposition is a way to rid the schema of anomalies.
 
-Decomposition of a relational schema
--------------------------------------
-
+### Decomposition of a relational schema
+```
 R(A1, ... , An)
 to be decomposed into
 R1(B1,...,Bk)
 R2(C1,...,Cm)
-
+```
 R1 natural join R2 = R. Also, B U C = A
 R1 = projection on B attributes of R
 R2 = projection on the C attributes of R
@@ -683,8 +703,7 @@ iii. Compute FDs for R1 and R2
   iv. Compute keys for R1 and R2
 
 
-LECTURE 20: Multivalued dependencies
-====================================
+## LECTURE 20: Multivalued dependencies
 
 4NF is much stronger than BCNF. Only a subset of FDs in BCNF are in 4NF.
 
@@ -734,8 +753,7 @@ Splitting rule does not apply to MVDs though.
 Relation R with MVDs is in 4NF if:
    For each nontrivial A->>B, A is a key
 
-4NF decomposition algorithm
----------------------------
+### 4NF decomposition algorithm
 Input: relation R + FDs for R + MVDs for R
 Output: decomposition of R into 4NF relations with lossless join.
 
@@ -747,6 +765,7 @@ iii. Compute FDs and MVDs for R1 and R2
   iv. Compute keys for R1 and R2.
 
 Ex 1.
+```
 Apply(ssn, cname, hobby)
 
 sname ->> cname : no keys
@@ -754,9 +773,9 @@ sname ->> cname : no keys
 divide into 2 relations
 A1(ssn, cname) no FDs and no MVDs
 A2(ssn, hobby)
-
+```
 Ex 2.
-
+```
 Apply(SSN, cname, date, major, hobby)
 
 ssn, cname -> date ( violating FD)
@@ -765,9 +784,9 @@ no keys
 
 A1(ssn, cname, date, major)  -> A3(ssn, cname, date) and A4(ssn, cname, major)
 A2(ssn, cname, date, hobby) -> A5(ssn, cname, hobby)
+```
 
-LECTURE 21: Querying XML
-========================
+## LECTURE 21: Querying XML
 
 Querying XML is not nearly as mature as querying relational.
 * Newer
@@ -807,10 +826,10 @@ Xpath queries operate on and return sequence of elements.
 * XML document
 * XML stream
 
-LECTURE 22: Querying XML XPath
-==============================
+## LECTURE 22: Querying XML XPath
 
 Xpath:
+```
 /Bookstore/(Book|Magazine)/Title - all titles of books and magazines
 /Bookstore/*/Title - all titles
 //Title - all titles
@@ -824,9 +843,9 @@ To fix the above query, we do this
 /Bookstore/Book[@Price < 90 and Authors/Author[Last_Name = "Widom" and First_Name="Jeffrey"]]/Title
 //Authors/Author[2] - returns the 2nd subelement
 //Book[contains(Remark, "great")]/title - returns titles of all books which have a remark with the word "great".
-
+```
 It's possible to do "self-joins" on XML documents to compare multiple element values.
-
+```
 //Bookstore//*[name(parent::*) != "Bookstore" and name(parent::*) != "Book"] - all elements whose parent is not "Bookstore" or "Book".
 
 //Bookstore/(Book|Magazine)[Title = following-sibling::*/Title] - all books and magazines with non-unique titles. But this only checks for first instance of such equivalence, so it will only return the first element that matching a succeeding one.
@@ -834,14 +853,13 @@ It's possible to do "self-joins" on XML documents to compare multiple element va
 //Bookstore/(Book|Magazine)[Title = following-sibling::*/Title or Title = preceding-sibling::*/Title] - all books and magazines with non-unique subtitles.
 
 //Bookstore/(Book|Magazine)[Title = following-sibling::Book/Title or Title = preceding-sibling::Book/Title] - all books or magazines with the same title as some other book.
-
+```
 XPath revolves around 'implicit existential quantification.' It revolves around matching sets of values and returning things if *any* element of that set matches the condition. There is no construct for 'for-all/universal' querying, where you want to see if *all* elements in the ma
 
 The kludgy way to achieve for-all semantics is shown below --
 //Book[count(Authors/Author[contains(First_Name, "J")]) = count(Authors/Author/First_Name)] - returns authors where *all* of the authors have "J" in their first name.
 
-LECTURE 23: XQuery
-==================
+## LECTURE 23: XQuery
 
 Querying XML is not as mature as querying databases. XPath was the original, XSLT came after that and XQuery is the newest language to query XML.
 
@@ -861,8 +879,7 @@ Return expr
 It's possible to mix queries and XML.
 <Result> { query goes here} </Result>
 
-LECTURE 24: Writing in XQuery
-=============================
+## LECTURE 24: Writing in XQuery
 
 XQuery is quite complex, certainly more complex than SQL.
 
@@ -872,6 +889,7 @@ where $b/@Price < 90 and $b/Authors/Author/Last_Name = "Ullman"
 return $b/Title
 
 To return titles and author first names of books whose title contains one of the author's first names.
+```
 for $b in doc("BookstoreQ.xml")/Bookstore/Book
 where some $fn in $b/Authors/Author/First_Name
    satisfies contains($b/Title, $fn)
@@ -879,9 +897,11 @@ return <Book>
           { $b/Title }
           { $b/Authors/Author/First_Name }
        </Book>
+```
 
 But, the above query returns first names of all authors of books which satisfy the condition. Instead of that, if we want to return the first names of just authors that appear in the title, we run the following query --
 
+```
 for $b in doc("BookstoreQ.xml")/Bookstore/Book
 where some $fn in $b/Authors/Author/First_Name
    satisfies contains($b/Title, $fn)
@@ -890,8 +910,10 @@ return <Book>
           {  for $fn in $b/Authors/Author/First_Name
              where contains($b/Title, $fn) return $fn }
        </Book>
+```
 
 To find the average book price
+```
 <Average>
    { let $plist := doc("BookstoreQ.xml")/bookstore/Book/@Price
      return avg($plist) }
@@ -902,8 +924,10 @@ A more compact way of writing the above query
    { let $a := avg(doc("BookstoreQ.xml")/bookstore/Book/@Price)
      return a }
 </Average>
+```
 
 To return all prices below the average
+```
 let $a := avg(doc("BookstoreQ.xml")/Bookstore/Book/@Price)
 for $b in doc("BookstoreQ.xml")/Bookstore/Book
 where $b/@Price < $a
@@ -920,32 +944,30 @@ return <Book>
           { $b/Title }
           <Price> { $b/data(@Price) } </Price>
        </Book>
+```
 
 We have to use xs:int() otherwise price will be a string, and order by will cause it to be lexicographically sorted. So, we convert it to an integer prior to sorting.
 
-Duplicate elimination:
-----------------------
-
+### Duplicate elimination:
+```
 for $n in distinct-values(doc("bookstoreQ.xml")//Last_Name)
 return $n
-
+```
 But, the above query strips the element names from the result.
-
+```
 for $n in distinct-values(doc("bookstoreQ.xml")//Last_Name)
 return <Last_Name> { $n } </Last_Name>
-
+```
 Leaving out the curly braces around $n will cause the result to print "$n". Instead, to evaluate $n use curly braces.
 
-Universal querying
-==================
+### Universal querying
 
 Returns all books which have authors with first names containing the letter "J"
 for $b in doc("BookstoreQ.xml")/Bookstore/Book
 where every $fn in $b/Authors/Author/First_Name satisfies contains($fn, "J")
 return $b
 
-LECTURE 25: XSLT
-================
+## LECTURE 25: XSLT
 
 Extensible Stylesheet language. T is for transformations, which was added later. XSLT is in XML format.
 
@@ -962,21 +984,22 @@ Drawbacks:
 * Implicit template priority scheme
 
 When you have elements that do not match the template, XSLT returns a concatenation of all string leaf values.
-
+```
 <xsl::template match="Book" />
+```
 When you find a Book element, throw it away
 
 When you have two templates that both match, there are some inbuilt priorities that determine which one overrides the other.
-
+```
 <xsl:template match="*|@*|text()">
    <xsl::copy>
       <xsl:apply-templates select="*|@*|text()" />
    </xsl:copy>
 <xsl:template>
+```
 Does recursive application of templates.
 
-LECTURE 26: UML Data Modeling
-=============================
+## LECTURE 26: UML Data Modeling
 
 Unified Modeling Language
 
@@ -1013,8 +1036,7 @@ disjoint(every object is in at most one subclass)/overlapping
 Composition -- all objects of one class belong to objects of another class. (1..1)
 Aggregation -- only some objects of a class belong to objects of another class  (0...1)
 
-LECTURE 27: UML To Relations
-============================
+## LECTURE 27: UML To Relations
 
 Database design model is translated to a database schema.
 
@@ -1042,8 +1064,7 @@ Disjoing, complete: design 2
 
 Subclasses and association classes need not be regular classes with a single key.
 
-LECTURE 28: Indexes
-===================
+## LECTURE 28: Indexes
 
 * Indexes are the primary way to get improved performance on a database.
 * Persistent data structure used in a database.
@@ -1075,8 +1096,7 @@ Input = database(statistics) and workload
 Output = recommended indexes
 It experiments with different types of indexes and selects those indexes where the benefits outweigh drawbacks.
 
-LECTURE 29: CONSTRAINTS AND TRIGGERS
-====================================
+## LECTURE 29: CONSTRAINTS AND TRIGGERS
 
 * SQL standard; systems vary considerably.
 
@@ -1122,8 +1142,7 @@ Original motivation to move logic from apps to DBMS.
 To enforce constraints in an expressive manner.
 It's also possible to have constraint "repair" logic to launch an action that fixes the constraint.
 
-LECTURE 30: Constraints of several types
-========================================
+## LECTURE 30: Constraints of several types
 
 Non-null constraint: we just add keyword 'non-null' to the declaration
 
@@ -1135,8 +1154,7 @@ Attribute check constraint: apply value-based constraints on attributes. This is
 
 General assertions: not supported by any DBMS. For every possible change that can violate the assertion, the system must check for the assertion.
 
-LECTURE 31: Referential integrity
-=================================
+## LECTURE 31: Referential integrity
 
 Refers to integrity of references = no "dangling" pointers.
 
@@ -1156,8 +1174,7 @@ Updating attributes has similar actions as above. Except, cascade will propagate
 
 Can have referential integrity within a table.
 
-LECTURE 32: Triggers
-====================
+## LECTURE 32: Triggers
 
 Triggers: event-condition-action rules.
 
@@ -1182,8 +1199,7 @@ Multiple triggers can be activated at the same time, which goes first depends on
 
 Condition in 'when' vs. as part of 'action' - this could affect efficiency.
 
-LECTURE 33: Triggers Demo
-=========================
+## LECTURE 33: Triggers Demo
 
 Primary open-source systems
 * Postgres - implements full standard, but uses cumbersome syntax
@@ -1194,14 +1210,13 @@ Primary open-source systems
 
 Can activate trigger before or after (default).
 
-LECTURE 34: Triggers (continued)
-================================
+## LECTURE 34: Triggers (continued)
 Postgres > SQLite >> MySQL
 
 Triggers can trigger themselves. You can turn this behavior by activating recursive triggers in SQLITE.
 
-LECTURE 35: Transactions
-========================
+## LECTURE 35: Transactions
+
 Motivations -
 1. Concurrent database access by multiple clients
 2. Resilient to system failures
@@ -1220,32 +1235,30 @@ Solution to both concurrency and failures: Transactions
 * Transactions appear to run in isolation
 * Either all complete or none at all
 
-LECTURE 36: Properties of Transactions
-======================================
+## LECTURE 36: Properties of Transactions
 
 ACID properties - Atomicity, consistency, isolation, durability
 
-ISOLATION
+### ISOLATION
 Serializability - operations within transactions may be interleaved, but execution must be equivalent to some sequential order of all transactions. This is possible by locking portions of databases.
 
 Database systems only guarantee serializability i.e. SOME sequence of transactions, not any specific order of transactions.
 
-DURABILITY
+### DURABILITY
 If system crashes after transaction commits, all effects of transaction remain in the database. This is made possible by logging.
 
-ATOMICITY
+### ATOMICITY
 Each transaction is "all or nothing." Also uses logging mechanism.
 
 Transaction rollback (=abort) is the implementation mechanism behind atomicity.
 * Undoes partial effects of transactions
 * Can be system- or client-initiated
 
-CONSISTENCY
+### CONSISTENCY
 * Can assume all constraints hold when transaction begins
 * Must guarantee all constraints hold when transaction ends
 
-LECTURE 37: Transaction isolation
-=================================
+## LECTURE 37: Transaction isolation
 
 Serializability's drawbacks
 - overhead
@@ -1268,8 +1281,7 @@ Repeatable read: A transaction may not perform dirty reads. An item read multipl
 
 Read Only transactions: Helps system optimize performance. Independent of isolation level.
 
-LECTURE 38: VIEWS
-=================
+## LECTURE 38: VIEWS
 
 Views are based on a 3 level vision of databases.
 Physical - Conceptual - Logical
@@ -1292,8 +1304,7 @@ Syntax for creating a view:
 Create View Vname(A1, A2,...,An) As
 <Query>
 
-LECTURE 39: View Modifications - introduction
-=============================================
+## LECTURE 39: View Modifications - introduction
 
 Views aren't stored, so modifying them is counterintuitive. But, views are some users' entire view of the database.
 Solution: Modifications to V rewritten to modify base tables.
@@ -1306,8 +1317,7 @@ Solution: Modifications to V rewritten to modify base tables.
 + no user intervention
 - restrictions are significant
 
-LECTURE 40: View modifications thru triggers
-============================================
+## LECTURE 40: View modifications thru triggers
 
 'instead of' is used to imply that instead of deleting tuples from a view, delete from/insert into the underlying base table.
 
@@ -1319,8 +1329,7 @@ Views can hae ambiguous modifications where you want to prevent users from modif
 3. If there's a complicated self-referential query expression.
 4. If there are multiple tables in the FROM clause.
 
-LECTURE 41: Automatic View Modifications
-========================================
+## LECTURE 41: Automatic View Modifications
 
 * Once V is defined, want to modify V like any other table
 * Modifications to V rewritten to modify base tables.
@@ -1344,8 +1353,7 @@ We don't want updates to view that affect the base table but the changes do not 
 
 with check option - when the system automatically performs an operation, it checks if the tuple to be inserted conforms to the base table schema.
 
-LECTURE 42: Materialized Views
-==============================
+## LECTURE 42: Materialized Views
 
 Virtual views are what we've seen so far. They're just a query on the database.
 
