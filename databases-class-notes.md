@@ -1376,12 +1376,10 @@ Picking which materialized views to create
 * Number of modifications affecting view
 Basically, the above problem is a query-update tradeoff. Very common tradeoff when dealing with databases, for e.g. when dealing with indexes.
 
-Automatic query rewriting to use materialized views
----------------------------------------------------
+### Automatic query rewriting to use materialized views
 Possible for a sophisticated DBMS to reuse views in place of performing joins on base tables.
 
-LECTURE 43: Authorization
-=========================
+## LECTURE 43: Authorization
 
 * Make sure users see only the data they're supposed to see
 * Guard the database against modifications by malicious users
@@ -1398,8 +1396,7 @@ Cascade to other users granted by user. Restrict means disallow if cascade will 
 
 End users may not be interacting with privilege system of database.
 
-LECTURE 44: Recursion in SQL - Basic recursive WITH statement
-=============================================================
+## LECTURE 44: Recursion in SQL - Basic recursive WITH statement
 
 SQL is not a turing-complete language
 * Simple, convenient, declarative
@@ -1412,34 +1409,39 @@ Example 2: Company hierarchy - project cost given hierarchy
 Example 3: Airline flights - find cheapest way to fly from A to B
 
 SQL 'with' statement - adds notion of recursion.
+``
 With R1 as (query-1),
      R2 as (query-2),
      ...
      Rn as (query-n)
+```
 <query involving R1,...,Rn (and other tables)>
-
+```
 E.g. of recursive query
-
+```
 with recursive
    R as (base query union recursive query)
 <query involving R (and other tables)>
+```
 
 base query seeds the table and the recursive query continues to add tuples to the table until there are no tuples to add.
 
-LECTURE 45: Recursion: Basic recursive WITH Statement
-=====================================================
+## LECTURE 45: Recursion: Basic recursive WITH Statement
 
 1. To find ancestors
 with recursive
+```
 Ancestor(a,d) as (select parent as a, child as d from ParentOf
                   union
                   select Ancestor.a, ParentOf.child as d
                   from Ancestor, ParentOf
                   where Ancestor.d = ParentOf.parent)
 select a from Ancestor where d='Mary'
-# finds Mary's ancestors
+```
+finds Mary's ancestors
 
 2. To find project cost
+```
 with recursive
 Superior as (select * from Manager
              union
@@ -1453,10 +1455,11 @@ where ID in
     union
     select eID from Project, Superior
     where Project.name = 'X' and Project.mgrID = Superior.mID)
-
+```
 When we think of recursion we think of transitive closure.
 
 3. lowest cost flight plan
+```
 with recursive
 Route(orig,dest,total) as
    (select orig, dest, cost as total from Flight
@@ -1466,11 +1469,10 @@ Route(orig,dest,total) as
     where R.dest = F.orig)
 select * from Route
 where orig = 'A' and dest = 'B'
-
+```
 The above query works, but it results in infinite recursion. You can break the recursion by adding a check to the query to only add routes with a cost < total for same route (from tuples that already exist in table). Or use a limit feature.
 
-LECTURE 46: Nonlinear and mutual recursion
-==========================================
+## LECTURE 46: Nonlinear and mutual recursion
 
 Joining a table with itself in the recursive query is an example of non-linear recursion.
 
@@ -1486,8 +1488,7 @@ Some Hubs and authorities are pre-designated. Hubs are linked to >= 3 Auuths. Au
 
 Recursion with aggregation is disallowed as there could be ambiguity.
 
-LECTURE 47: OLAP ( On-line Analytical Processing)
-=================================================
+## LECTURE 47: OLAP ( On-line Analytical Processing)
 
 Database processing is broadly divided into two categories-
 
@@ -1529,16 +1530,14 @@ Data Cube (a.k.a multidimensional OLAP)
 * Fact (dependent) data in cells
 * aggregated data on sides, edges and corners
 
-Drill-down and roll-up
-----------------------
+### Drill-down and roll-up
 
 drill down - Examining summary data, break out by dimension attribute. We add a grouping attribute to get more detail.
 roll up - examining data, summarize by dimension attribute.
 
 SQL constructs: With cube and With Rollup
 
-LECTURE 48: OLAP ( On-line Analytical Processing) continued
-===========================================================
+## LECTURE 48: OLAP ( On-line Analytical Processing) continued
 
 Only MySQL supports With Rollup, but not With Cube.
 
@@ -1552,8 +1551,7 @@ with rollup can be used to effectively produce 'with cube'
 
 If attributes are hierarchical e.g. state, county, city, with rollup is useful.
 
-LECTURE 49: NoSQL (Motivation)
-==============================
+## LECTURE 49: NoSQL (Motivation)
 
 Misleading name. "SQl" referred to here is traditional relational DBMS, it doesn't refer to the SQL language.
 
@@ -1570,8 +1568,7 @@ Downsides
 
 Therefore, accepted definition = "Not only SQL".
 
-Example 1. Web log analysis
-----------------------------
+### Example 1. Web log analysis
 Each record: UserID, URL, timestamp, additional-info
 
 Task 1:load data into system
@@ -1597,8 +1594,7 @@ Task 4:Find average age of user accessing given URL
 SQL-like
 
 
-Example #2: Social network graph
---------------------------------
+### Example #2: Social network graph
 
 Each record: UserID1, UserID2
 Separate records: UserID1, name, age, gender,...
@@ -1607,16 +1603,14 @@ Separate records: UserID1, name, age, gender,...
 * approximate solutions are acceptable, so consistency can be weak
 
 
-Example #: Wikipedia pages
---------------------------
+### Example #3: Wikipedia pages
 Large collection of documents
 Combination of structured (key-value pairs) and unstructured data (large volumes of text).
 
 * Consistency is not critical
 * SQl is not the best solution as we may have to search over structured and unstructured data.
 
-LECTURE 50: NoSQL (continued)
-=============================
+## LECTURE 50: NoSQL (continued)
 
 Several incarnations of NoSQL systems
 - MapReduce ~ OLAP applications
@@ -1639,8 +1633,7 @@ Map: takes a data item as input and generates zero or more key-value pairs
 
 Reduce - takes a key and list of values to produce 0 or more methods.
 
-Drawbacks of Map-Reduce:
------------------------
+### Drawbacks of Map-Reduce:
 Schemas and declarative queries are missed.
 Hive - schemas, SQL-like query language
 Pig - more imperative but with relational operators
@@ -1648,14 +1641,13 @@ Pig - more imperative but with relational operators
 Dryad allows user to specify workflow.
 * also DryadLINQ language.
 
-Key-Value stores
-----------------
+### Key-Value stores
 * Extremely simple interface
 * Designed for OLTP operations
 * Data model: (key, value) pairs
 * Operations: insert, fetch, update, delete
 
-Efficiency, scalability and fault-tolerance are desired.
+Efficiency, scalability and fault-tolerance are desiredß.
 * Records distributed to nodes based on key.
 * Replication
 * Single-record transactions, "eventual consistency" i.e. replicas may diverge from one another, but if all operations stop, replicas will eventually become consistent.
@@ -1664,16 +1656,14 @@ Efficiency, scalability and fault-tolerance are desired.
 * Some allow Fetch on a range of keys.
 * Example systems - Google Big Table, Cassandra, Amazon Dynamo.
 
-Document Stores
----------------
+### Document Stores
 * Like key-value stores except value is document.
 * Data might contain JSON, XML, other semistructured formats.
 * Basic operations - insert, fetch, update, delete
 * Also fetch based on document contents
 * Example - couchDB, MongoDB, SimpleDB.
 
-Graph database systems
-----------------------
+### Graph database systems
 * Data model: nodes and edges
 * Nodes may have properties ( including ID)
 * Edges may have labels or roles.
